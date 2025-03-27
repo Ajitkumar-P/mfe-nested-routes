@@ -6,11 +6,11 @@ module.exports = {
   mode: 'development',
   entry: './src/Index.js',
   devServer: {
-    port: 3002,
+    port: 3003,
     historyApiFallback: true,
   },
   output: {
-    publicPath: 'http://localhost:3002/',
+    publicPath: 'http://localhost:3003/',
   },
   module: {
     rules: [
@@ -24,22 +24,31 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
+      },
     ],
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'mfe2',
+      name: 'core_ui',
       filename: 'remoteEntry.js',
-      remotes: {
-        core_ui: "core_ui@http://localhost:3003/remoteEntry.js",
-      },
       exposes: {
-        './App': './src/App',
+        './Button': './src/components/Button/Button',
+        './App.css': './src/App.css', // Expose the CSS file
       },
       shared: {
-        react: { singleton: true, requiredVersion: "^18.0.0" },
-        "react-dom": { singleton: true, requiredVersion: "^18.0.0" },
-        "react-router-dom": { singleton: true, requiredVersion: "^6.0.0" },
+        react: {
+          singleton: true,
+          requiredVersion: '^18.0.0',
+          eager: true // Change to true
+        },
+        "react-dom": {
+          singleton: true,
+          requiredVersion: '^18.0.0',
+          eager: true // Change to true
+        },
       },
     }),
     new HtmlWebpackPlugin({
@@ -47,6 +56,6 @@ module.exports = {
     }),
   ],
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.css'],
   },
 };

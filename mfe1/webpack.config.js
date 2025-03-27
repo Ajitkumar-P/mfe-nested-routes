@@ -30,6 +30,9 @@ module.exports = {
     new ModuleFederationPlugin({
       name: 'mfe1',
       filename: 'remoteEntry.js',
+      remotes: {
+        core_ui: "core_ui@http://localhost:3003/remoteEntry.js",
+      },
       exposes: {
         './App': './src/App',
       },
