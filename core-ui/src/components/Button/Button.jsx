@@ -9,8 +9,8 @@ const VARIANTS = {
 };
 
 const Button = ({ variant = "primary", children, ...props }) => {
-  console.log('Button Variant:', variant);
-  console.log('Tailwind Class:', VARIANTS[variant]);
+  console.log("Button Variant:", variant);
+  console.log("Tailwind Class:", VARIANTS[variant]);
 
   return (
     <button
